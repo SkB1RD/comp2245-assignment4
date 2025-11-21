@@ -1,11 +1,21 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const lookupBtn = document.getElementById("lookup");
     const resultDiv = document.getElementById("result");
 
-    lookupBtn.addEventListener("click", () => {
+    // Lookup Country
+    document.getElementById("lookup").addEventListener("click", () => {
         const countryInput = document.getElementById("country").value.trim();
         const url = "world.php?country=" + encodeURIComponent(countryInput);
+        fetchData(url);
+    });
 
+    // Lookup Cities
+    document.getElementById("lookupCities").addEventListener("click", () => {
+        const countryInput = document.getElementById("country").value.trim();
+        const url = "world.php?country=" + encodeURIComponent(countryInput) + "&lookup=cities";
+        fetchData(url);
+    });
+
+    function fetchData(url) {
         fetch(url)
             .then(response => {
                 if (!response.ok) throw new Error("Network response was not OK");
@@ -13,16 +23,15 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .then(data => {
                 if (data.trim() === "") {
-                    
                     resultDiv.style.display = "none";
                 } else {
                     resultDiv.innerHTML = data;
-                    resultDiv.style.display = "block"; 
+                    resultDiv.style.display = "block";
                 }
             })
             .catch(error => {
                 resultDiv.innerHTML = "Error: " + error.message;
-                resultDiv.style.display = "block"; 
+                resultDiv.style.display = "block";
             });
-    });
+    }
 });
