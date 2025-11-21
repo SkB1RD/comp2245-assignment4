@@ -1,14 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const resultDiv = document.getElementById("result");
 
-    // Lookup Country
+    
     document.getElementById("lookup").addEventListener("click", () => {
         const countryInput = document.getElementById("country").value.trim();
         const url = "world.php?country=" + encodeURIComponent(countryInput);
         fetchData(url);
     });
 
-    // Lookup Cities
+    
     document.getElementById("lookupCities").addEventListener("click", () => {
         const countryInput = document.getElementById("country").value.trim();
         const url = "world.php?country=" + encodeURIComponent(countryInput) + "&lookup=cities";
