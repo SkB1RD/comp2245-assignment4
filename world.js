@@ -4,18 +4,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     lookupBtn.addEventListener("click", () => {
         const countryInput = document.getElementById("country").value.trim();
-
-        // Build the URL with the GET parameter
         const url = "world.php?country=" + encodeURIComponent(countryInput);
 
-        // Fetch from world.php
         fetch(url)
-            .then(response => response.text())
+            .then(response => {
+                if (!response.ok) throw new Error("Network response was not OK");
+                return response.text();
+            })
             .then(data => {
-                resultDiv.innerHTML = data;  // Print data into the result div
+                if (data.trim() === "") {
+                    
+                    resultDiv.style.display = "none";
+                } else {
+                    resultDiv.innerHTML = data;
+                    resultDiv.style.display = "block"; 
+                }
             })
             .catch(error => {
-                resultDiv.innerHTML = "Error: " + error;
+                resultDiv.innerHTML = "Error: " + error.message;
+                resultDiv.style.display = "block"; 
             });
     });
 });
